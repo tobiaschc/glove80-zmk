@@ -66,6 +66,7 @@
 #define LAYER_symbol 2
 #define LAYER_magic 3
 #define LAYER_basic 4
+#define LAYER_navigation 5
 
 /* To deal with the situation where there is no Lower layer, to keep &lower happy */
 #ifndef LAYER_Lower
@@ -441,6 +442,34 @@
                 , <&macro_release>
                 , <&kp LALT>;
         };
+
+        cmd_mb1: cmd_mb1 {
+            label = "&CMD_MB1";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            tap-ms = <40>;
+            wait-ms = <40>;
+            bindings = <&macro_press>
+                , <&kp LGUI>
+                , <&macro_tap>
+                , <&mkp MB1>
+                , <&macro_release>
+                , <&kp LGUI>;
+        };
+
+        shift_mb1: shift_mb1 {
+            label = "&SHIFT_MB1";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            tap-ms = <40>;
+            wait-ms = <40>;
+            bindings = <&macro_press>
+                , <&kp LSHFT>
+                , <&macro_tap>
+                , <&mkp MB1>
+                , <&macro_release>
+                , <&kp LSHFT>;
+        };
     };
 };
 
@@ -560,6 +589,12 @@
             key-positions = <POS_LH_T4 POS_RH_T4>;
             bindings = <&kp LS(MINUS)>;
         };
+
+        navigation_combo {
+            timeout-ms = <2000>;
+            key-positions = <POS_LH_T5 POS_RH_T5>;
+            bindings = <&mo LAYER_navigation>;
+        };
     };
 };
 
@@ -572,7 +607,7 @@
         layer_unix {
             bindings = <
          &kp C_BRI_DN            &kp C_BRI_UP                &kp C_PP               &kp C_PREV               &kp C_NEXT                                                                                                                            &kp C_VOL_DN              &kp C_VOL_UP               &kp C_MUTE              &to LAYER_unix  &to LAYER_windows
-                &none                   &none              &kp LS(N3)                &kp GRAVE               &kp LS(N2)   &none                                                                                                 &none             &kp LS(GRAVE)                 &kp MINUS               &kp LS(N8)             &to LAYER_basic    &to LAYER_symbol
+                &kp RALT                   &none              &kp LS(N3)                &kp GRAVE               &kp LS(N2)   &none                                                                                                 &none             &kp LS(GRAVE)                 &kp MINUS               &kp LS(N8)             &to LAYER_basic    &to LAYER_symbol
               &kp TAB                   &kp Q                   &kp W                    &kp E                    &kp R   &kp T                                                                                                 &kp Y                     &kp U                     &kp I                    &kp O                       &kp P             &kp TAB
               &kp ESC  &HRM_left_pinky LALT A  &HRM_left_ring LSHFT S  &HRM_left_middle LGUI D  &HRM_left_index LCTRL F   &kp G                                                                                                 &kp H  &HRM_right_index RCTRL J  &HRM_right_middle RGUI K  &HRM_right_ring RSHFT L  &HRM_right_pinky RALT SEMI             &kp SQT
              &kp CAPS                   &kp Z                   &kp X                    &kp C                    &kp V   &kp B  &kp LSHFT                    &copy   &paste  &screenshot    &move_most_recent_app  &kp RSHFT   &kp N                     &kp M                 &kp COMMA                  &kp DOT                    &kp FSLH          &caps_word
@@ -621,6 +656,17 @@
              &kp CAPS         &kp A     &kp S       &kp D       &kp F   &kp G                                                                                &kp H         &kp J         &kp K       &kp L        &kp SEMI             &kp SQT
             &kp LSHFT         &kp Z     &kp X       &kp C       &kp V   &kp B     &copy    &paste  &screenshot  &move_most_recent_app     &none    &kp RET   &kp N         &kp M     &kp COMMA     &kp DOT        &kp FSLH           &kp RSHFT
  &magic LAYER_magic 0     &kp LCTRL  &kp LALT    &kp LEFT   &kp RIGHT          &kp BSPC  &kp LGUI      &kp DEL                  &none  &kp RGUI  &kp SPACE              &kp DOWN        &kp UP    &kp RALT       &kp RCTRL     &rgb_ug RGB_TOG
+            >;
+        };
+
+        layer_navigation {
+            bindings = <
+                &none            &none            &none            &none            &none                                                                                  &none   &none   &none   &none        &none
+                &none            &none            &none            &none            &none            &none                                                         &none   &none   &none   &none   &none        &none
+                &none            &none            &msc MOVE_Y(30)            &cmd_mb1            &none            &none                                                         &none   &none   &shift_mb1   &msc MOVE_Y(-30)   &none        &none
+                &msc MOVE_X(-10)  &msc MOVE_Y(10)  &mkp MB1  &mmv MOVE_X(-550)  &mmv MOVE_X(500)  &none                                                         &none   &mmv MOVE_Y(500)   &mmv MOVE_Y(-550)   &mkp MB2   &msc MOVE_Y(-10)        &msc MOVE_X(10)
+          &none  &none  &mkp MB1  &mmv MOVE_X(-1090)  &mmv MOVE_X(1200)  &none   &none   &none   &none                  &none   &none   &none   &none  &mmv MOVE_Y(1200)   &mmv MOVE_Y(-1090)  &mkp MB2   &none  &none
+ &magic LAYER_magic 0            &none            &none            &none            &none                    &kp BSPC  &none  &kp DEL   &kp BSPC  &none  &kp SPACE                                        &none            &none               &none            &none              &none
             >;
         };
 
